@@ -19,4 +19,12 @@ This project originates from a 30-year longitudinal perspective: evolving from *
 - **Reinforcement Learning**: Stable Baselines3 / Custom Gymnasium Environments
 
 ## 📚 Roadmap (2026-2027)
-- [ ] **Phase 1**: Transitioning Classical Markov Models to Open Quantum Systems
+- [ ] **Phase 1**: Transitioning Classical Markov Models to Open Quantum Systems. 
+- [ ] **Phase 2**: Development of a Quantum Entropy Visualization Tool. 
+- [ ] **Phase 3**: Integraton of RL-based Quantum Error Mitigation. 
+
+## ✍️ Author
+**Alex Seong** *Software Engineer / ML Engineer / AI Engineer / Aspiring Quantum Information System Researcher*
+
+## 📄 License
+This project is licensed under the MIT License.
