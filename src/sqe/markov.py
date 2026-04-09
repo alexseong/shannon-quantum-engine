@@ -1,5 +1,6 @@
 import numpy as np
 from typing import Union, List
+from scipy.linalg import expm # Matrix exponential (Taylor Series based)
 
 class QuantumMarkovModel:
     """
@@ -48,6 +49,51 @@ class QuantumMarkovModel:
         next_dist = np.dot(current_dist, transition_matrix)
         # self.density_matrix = np.diag(next_dist)
         return self.density_matrix
+
+class QuantumMarkovEngine(QuantumMarkovModel):
+    """
+    Advanced Engine incorporating Series Convergence and Basis Transformation.
+    """
+    def transformation_basis(self, unitary_matrix: np.ndarray):
+        """
+        [Linear Algebra: Basis Transformation]
+        Change the representation of the density matrix.
+        rho_prime = U * rho * U^dagger
+        """
+
+        # U * rho * U_conjugate_transpose
+        u_dag = unitary_matrix.conj().T
+        self.density_matrix = unitary_matrix @ self.density_matrix @ u_dag
+        return self.density_matrix
+
+    def evolve_continuous_time(self, hamiltonian: np.ndarray, t: float, terms: int = 50):
+        """
+        [Power Series Expansion]
+        Evolves the state using the matrix exponential (Taylor Series).
+        U(t) = exp( -i * H * t ) = I + (-iHt) + (-iHt)^2/2! + ...
+        """
+
+        # i is complet unit
+        i_unit = 1j
+        evolution_operator = expm(-i_unit * hamiltonian * t)
+
+        # Apply unitary evolution: rho(t) = U * rho(0) * U^dag
+        u_dag = evolution_operator.conj().T
+        self.density_matrix = evolution_operator @ self.density_matrix @ u_dag
+        return self.density_matrix
+
+    def check_convergence(self, tolerance: float = 1e-6) -> bool:
+        """
+        [Sequence Convergence]
+        Check if the density matrix has reached a steady state (Fixed Point).
+        """
+        # This section plans to be expanded later to include the concept of a quantum distance, referred to as "Trace Distance."  
+        pass
+
+
+
+
+
 
 if __name__ == "__main__":
     qmm = QuantumMarkovModel(states_count=3)
